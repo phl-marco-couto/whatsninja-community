@@ -1,13 +1,10 @@
 import { Message as WbotMessage } from "whatsapp-web.js";
 import AppError from "../../errors/AppError";
 import Queue from "../../models/Queue";
-import GetTicketWbot from "../../helpers/GetTicketWbot";
-import GetWbotMessage from "../../helpers/GetWbotMessage";
-import SerializeWbotMsgId from "../../helpers/SerializeWbotMsgId";
 import Whatsapp from "../../models/Whatsapp";
-import Ticket from "../../models/Ticket";
-import { getWbot } from "../../libs/wbot";
 import { initWbot } from "../../libs/wbot";
+import ListWhatsAppsService from "../WhatsappService/ListWhatsAppsService";
+import StartAllWhatsAppsSessions from "./StartAllWhatsAppsSessions";
 
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";
@@ -31,8 +28,17 @@ const SendSimpleWhatsAppMessage = async ({
   contato = new Contact;
   contato.number = number;
   contato.name = name;
-
-  const whatsapp = await Whatsapp.findByPk(wppId);
+  console.log(wppId);
+  const whatsapp = await Whatsapp.findByPk(wppId, {
+    include: [
+      {
+        model: Queue,
+        as: "queues",
+        attributes: ["id", "name", "color", "greetingMessage"]
+      }
+    ],
+    order: [["queues", "name", "ASC"]]
+  });
 
   if (!whatsapp) {
     throw new AppError("ERR_NO_WAPP_FOUND", 404);

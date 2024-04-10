@@ -59,7 +59,7 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
         //args: args.split(' ')
         args: ["--no-sandbox", "--disable-setuid-sandbox"]
         }
-        });
+      });
 
       wbot.initialize();
 
@@ -112,12 +112,13 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
 
       wbot.on("ready", async () => {
         logger.info(`Session: ${sessionName} READY`);
-
+        console.log("here0.1");
         await whatsapp.update({
           status: "CONNECTED",
           qrcode: "",
           retries: 0
         });
+        console.log("here0.2");
 
         io.emit("whatsappSession", {
           action: "update",

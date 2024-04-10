@@ -119,20 +119,24 @@ export const initWbot = async (whatsapp: Whatsapp): Promise<Session> => {
           retries: 0
         });
         console.log("here0.2");
-
+        
         io.emit("whatsappSession", {
           action: "update",
           session: whatsapp
         });
-
+        
         const sessionIndex = sessions.findIndex(s => s.id === whatsapp.id);
         if (sessionIndex === -1) {
+          console.log("here0.3");
           wbot.id = whatsapp.id;
           sessions.push(wbot);
+          console.log("here0.4");
         }
-
+        
         wbot.sendPresenceAvailable();
+        console.log("here0.5");
         await syncUnreadMessages(wbot);
+        console.log("here0.6");
 
         resolve(wbot);
       });

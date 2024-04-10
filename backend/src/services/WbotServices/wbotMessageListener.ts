@@ -139,16 +139,6 @@ const verifyMessage = async (
   await CreateMessageService({ messageData });
 };
 
-    
-        
-          
-    
-
-        
-        Expand All
-    
-    @@ -174,8 +174,6 @@ const prepareLocation = (msg: WbotMessage): WbotMessage => {
-  
 const prepareLocation = (msg: WbotMessage): WbotMessage => {
   let gmapsUrl = "https://maps.google.com/maps?q=" + msg.location.latitude + "%2C" + msg.location.longitude + "&z=17&hl=pt-BR";
 
@@ -159,17 +149,6 @@ const prepareLocation = (msg: WbotMessage): WbotMessage => {
   return msg;
 };
 
-
-    
-          
-            
-    
-
-          
-          Expand Down
-    
-    
-  
 const verifyQueue = async (
   wbot: Session,
   msg: WbotMessage,

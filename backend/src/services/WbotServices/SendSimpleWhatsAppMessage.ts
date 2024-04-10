@@ -3,8 +3,6 @@ import AppError from "../../errors/AppError";
 import Queue from "../../models/Queue";
 import Whatsapp from "../../models/Whatsapp";
 import { initWbot } from "../../libs/wbot";
-import ListWhatsAppsService from "../WhatsappService/ListWhatsAppsService";
-import StartAllWhatsAppsSessions from "./StartAllWhatsAppsSessions";
 
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";

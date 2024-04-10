@@ -32,16 +32,7 @@ const SendSimpleWhatsAppMessage = async ({
   contato.number = number;
   contato.name = name;
 
-  const whatsapp = await Whatsapp.findByPk(wppId, {
-    include: [
-      {
-        model: Queue,
-        as: "queues",
-        attributes: ["id", "name", "color", "greetingMessage"]
-      }
-    ],
-    order: [["queues", "name", "ASC"]]
-  });
+  const whatsapp = await Whatsapp.findByPk(wppId);
 
   if (!whatsapp) {
     throw new AppError("ERR_NO_WAPP_FOUND", 404);

@@ -3,9 +3,11 @@ import AppError from "../../errors/AppError";
 import Queue from "../../models/Queue";
 import Whatsapp from "../../models/Whatsapp";
 import { initWbot } from "../../libs/wbot";
-
+import { wbotMessageListener } from "./wbotMessageListener";
+import wbotMonitor from "./wbotMonitor";
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";
+import { logger } from "../../utils/logger";
 
 interface SimpleRequest {
   wppId: number;
@@ -43,7 +45,13 @@ const SendSimpleWhatsAppMessage = async ({
   }
 
   console.log("here")
-  const wbot = await initWbot(whatsapp);
+  try {
+    const wbot = await initWbot(whatsapp);
+    wbotMessageListener(wbot);
+    wbotMonitor(wbot, whatsapp);
+  } catch (err) {
+    logger.error(err);
+  }
   console.log("here1")
   console.log(contato)
   

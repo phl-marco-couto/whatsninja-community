@@ -68,9 +68,10 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
 };
 
 export const enviar = async (req: Request, res: Response): Promise<Response> => {
+  const { wppId } = req.params;
   const { number, name, body, quotedMsg }: NumberMessageData = req.body;
 
-  await SendSimpleWhatsAppMessage({ body, number, name });
+  await SendSimpleWhatsAppMessage({ wppId, body, number, name });
 
   return res.send();
 };

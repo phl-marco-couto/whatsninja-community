@@ -19,7 +19,7 @@ messageRoutes.post(
 );
 
 messageRoutes.post(
-  "/simpleMessage",
+  "/simpleMessage/:wppId",
   isAuth,
   MessageController.enviar
 );

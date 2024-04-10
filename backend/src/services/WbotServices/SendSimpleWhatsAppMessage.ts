@@ -5,17 +5,20 @@ import GetWbotMessage from "../../helpers/GetWbotMessage";
 import SerializeWbotMsgId from "../../helpers/SerializeWbotMsgId";
 import Message from "../../models/Message";
 import Ticket from "../../models/Ticket";
+import { getWbot } from "../../libs/wbot";
 
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";
 
 interface SimpleRequest {
+  wppId: number;
   body: string;
   name: string;
   number: string;
 }
 
 const SendSimpleWhatsAppMessage = async ({
+  wppId,
   body,
   number,
   name
@@ -29,7 +32,7 @@ const SendSimpleWhatsAppMessage = async ({
 
   let ticket:Ticket;
   ticket = new Ticket;
-  const wbot = await GetTicketWbot(ticket);
+  const wbot = getWbot(wppId);
 
   try {
     const sentMessage = await wbot.sendMessage(

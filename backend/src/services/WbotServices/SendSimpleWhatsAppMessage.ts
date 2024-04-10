@@ -48,6 +48,7 @@ const SendSimpleWhatsAppMessage = async ({
   
   try {
     const sentMessage = await wbot.sendMessage(
+      console.log("here1.1")
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
       formatBody(body, contato),
       {

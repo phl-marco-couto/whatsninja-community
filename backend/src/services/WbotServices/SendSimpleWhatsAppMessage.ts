@@ -32,7 +32,7 @@ const SendSimpleWhatsAppMessage = async ({
   contato.number = number;
   contato.name = name;
 
-  const whatsapp = await Whatsapp.findByPk(id, {
+  const whatsapp = await Whatsapp.findByPk(wppId, {
     include: [
       {
         model: Queue,
@@ -48,7 +48,7 @@ const SendSimpleWhatsAppMessage = async ({
   }
 
 
-  const wbot = initWbot(whatsapp);
+  const wbot = await initWbot(whatsapp);
 
   try {
     const sentMessage = await wbot.sendMessage(

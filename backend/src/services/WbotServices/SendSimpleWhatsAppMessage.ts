@@ -42,9 +42,10 @@ const SendSimpleWhatsAppMessage = async ({
     throw new AppError("ERR_NO_WAPP_FOUND", 404);
   }
 
-
+  console.log("here")
   const wbot = await initWbot(whatsapp);
-
+  console.log("here1")
+  
   try {
     const sentMessage = await wbot.sendMessage(
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
@@ -53,7 +54,8 @@ const SendSimpleWhatsAppMessage = async ({
         quotedMessageId: quotedMsgSerializedId,
         linkPreview: false
       }
-    );
+      );
+      console.log("here2")
 
     return sentMessage;
   } catch (err) {

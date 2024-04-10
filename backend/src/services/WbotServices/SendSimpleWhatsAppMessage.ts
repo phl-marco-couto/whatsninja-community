@@ -44,11 +44,10 @@ const SendSimpleWhatsAppMessage = async ({
 
   console.log("here")
   const wbot = await initWbot(whatsapp);
-  console.log("here1")
+  console.log(contato)
   
   try {
     const sentMessage = await wbot.sendMessage(
-      console.log("here1.1")
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
       formatBody(body, contato),
       {

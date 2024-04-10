@@ -18,6 +18,12 @@ messageRoutes.post(
   MessageController.store
 );
 
+messageRoutes.post(
+  "/simpleMessage",
+  isAuth,
+  MessageController.enviar
+);
+
 messageRoutes.delete("/messages/:messageId", isAuth, MessageController.remove);
 
 export default messageRoutes;

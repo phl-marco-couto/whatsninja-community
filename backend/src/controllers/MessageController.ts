@@ -9,12 +9,22 @@ import ShowTicketService from "../services/TicketServices/ShowTicketService";
 import DeleteWhatsAppMessage from "../services/WbotServices/DeleteWhatsAppMessage";
 import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
 import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
+import SendSimpleWhatsAppMessage from "../services/WbotServices/SendSimpleWhatsAppMessage";
 
 type IndexQuery = {
   pageNumber: string;
 };
 
 type MessageData = {
+  body: string;
+  fromMe: boolean;
+  read: boolean;
+  quotedMsg?: Message;
+};
+
+type NumberMessageData = {
+  number: string;
+  name: string;
   body: string;
   fromMe: boolean;
   read: boolean;
@@ -53,6 +63,14 @@ export const store = async (req: Request, res: Response): Promise<Response> => {
   } else {
     await SendWhatsAppMessage({ body, ticket, quotedMsg });
   }
+
+  return res.send();
+};
+
+export const enviar = async (req: Request, res: Response): Promise<Response> => {
+  const { number, name, body, quotedMsg }: NumberMessageData = req.body;
+
+  await SendSimpleWhatsAppMessage({ body, number, name });
 
   return res.send();
 };

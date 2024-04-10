@@ -44,6 +44,7 @@ const SendSimpleWhatsAppMessage = async ({
 
   console.log("here")
   const wbot = await initWbot(whatsapp);
+  console.log("here1")
   console.log(contato)
   
   try {

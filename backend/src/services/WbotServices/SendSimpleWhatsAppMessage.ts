@@ -23,18 +23,13 @@ const SendSimpleWhatsAppMessage = async ({
   let quotedMsgSerializedId: string | undefined;
 
   let contato:Contact;
-  contato = {
-    id: 0,
-    number: number,
-    email: '',
-    profilePicUrl: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    extraInfo: [],
-    isGroup: false,
-    tickets: [],
-    name: name
-  };
+  contato = new Contact;
+  contato.number = number;
+  contato.name = name;
+
+  let ticket:Ticket;
+  ticket = new Ticket;
+  const wbot = await GetTicketWbot(ticket);
 
   try {
     const sentMessage = await wbot.sendMessage(

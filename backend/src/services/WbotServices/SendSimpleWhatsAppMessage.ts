@@ -9,6 +9,8 @@ import Ticket from "../../models/Ticket";
 import { getWbot } from "../../libs/wbot";
 import { initWbot } from "../../libs/wbot";
 
+import { Client } from "whatsapp-web.js";
+
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";
 
@@ -41,8 +43,9 @@ const SendSimpleWhatsAppMessage = async ({
 
   const wbot = await getWbot(wppId);
 
-  console.log(contato)
-  console.log(body)
+
+  console.log(wbot.getChats())
+
   try {
     const sentMessage = await wbot.sendMessage(
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,

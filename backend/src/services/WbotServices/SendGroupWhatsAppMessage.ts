@@ -44,13 +44,13 @@ const SendGroupWhatsAppMessage = async ({
   const wbot = await getWbot(wppId);
 
   let chats = await wbot.getChats();
+  let filteredChat = chats.filter((chat) => chat.isGroup === true && chat.name === 'Grande Família');
 
-
-  console.log(chats.filter((chat) => chat.isGroup === true && chat.name === 'Grande Família'))
+  let groupChat = filteredChat[0];
 
   try {
     const sentMessage = await wbot.sendMessage(
-      `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
+      `${groupChat.id._serialized}`,
       formatBody(body, contato)
     );
 

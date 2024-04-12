@@ -43,8 +43,10 @@ const SendSimpleWhatsAppMessage = async ({
 
   const wbot = await getWbot(wppId);
 
+  let chats = await wbot.getChats();
 
-  console.log(await wbot.getChats())
+
+  console.log(chats.filter((chat) => chat.isGroup === true))
 
   try {
     const sentMessage = await wbot.sendMessage(

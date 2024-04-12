@@ -1,13 +1,16 @@
 import { Message as WbotMessage } from "whatsapp-web.js";
 import AppError from "../../errors/AppError";
 import Queue from "../../models/Queue";
+import GetTicketWbot from "../../helpers/GetTicketWbot";
+import GetWbotMessage from "../../helpers/GetWbotMessage";
+import SerializeWbotMsgId from "../../helpers/SerializeWbotMsgId";
 import Whatsapp from "../../models/Whatsapp";
+import Ticket from "../../models/Ticket";
+import { getWbot } from "../../libs/wbot";
 import { initWbot } from "../../libs/wbot";
-import { wbotMessageListener } from "./wbotMessageListener";
-import wbotMonitor from "./wbotMonitor";
+
 import formatBody from "../../helpers/Mustache";
 import Contact from "../../models/Contact";
-import { logger } from "../../utils/logger";
 
 interface SimpleRequest {
   wppId: number;
@@ -28,33 +31,18 @@ const SendSimpleWhatsAppMessage = async ({
   contato = new Contact;
   contato.number = number;
   contato.name = name;
-  console.log(wppId);
-  const whatsapp = await Whatsapp.findByPk(wppId, {
-    include: [
-      {
-        model: Queue,
-        as: "queues",
-        attributes: ["id", "name", "color", "greetingMessage"]
-      }
-    ],
-    order: [["queues", "name", "ASC"]]
-  });
+
+  const whatsapp = await Whatsapp.findByPk(wppId);
 
   if (!whatsapp) {
     throw new AppError("ERR_NO_WAPP_FOUND", 404);
   }
 
-  console.log("here")
-  try {
-    const wbot = await initWbot(whatsapp);
-    wbotMessageListener(wbot);
-    wbotMonitor(wbot, whatsapp);
-  } catch (err) {
-    logger.error(err);
-  }
-  console.log("here1")
-  console.log(contato)
-  
+
+  console.log(whatsapp);
+  const wbot = await getWbot(whatsapp);
+  console.log(wbot);
+
   try {
     const sentMessage = await wbot.sendMessage(
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
@@ -63,8 +51,7 @@ const SendSimpleWhatsAppMessage = async ({
         quotedMessageId: quotedMsgSerializedId,
         linkPreview: false
       }
-      );
-      console.log("here2")
+    );
 
     return sentMessage;
   } catch (err) {

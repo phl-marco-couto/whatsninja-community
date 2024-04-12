@@ -10,6 +10,7 @@ import DeleteWhatsAppMessage from "../services/WbotServices/DeleteWhatsAppMessag
 import SendWhatsAppMedia from "../services/WbotServices/SendWhatsAppMedia";
 import SendWhatsAppMessage from "../services/WbotServices/SendWhatsAppMessage";
 import SendSimpleWhatsAppMessage from "../services/WbotServices/SendSimpleWhatsAppMessage";
+import SendGroupWhatsAppMessage from "../services/WbotServices/SendGroupWhatsAppMessage";
 
 type IndexQuery = {
   pageNumber: string;
@@ -76,6 +77,19 @@ export const enviar = async (req: Request, res: Response): Promise<Response> => 
   wppId = Number(wppIdParam);
 
   await SendSimpleWhatsAppMessage({ wppId, body, number, name });
+
+  return res.send();
+};
+
+export const enviarGrupo = async (req: Request, res: Response): Promise<Response> => {
+  const { wppIdParam } = req.params;
+  const { number, name, body, quotedMsg }: NumberMessageData = req.body;
+  console.log(req.params);
+  let wppId;
+  console.log(wppIdParam);
+  wppId = Number(wppIdParam);
+
+  await SendGroupWhatsAppMessage({ wppId, body, number, name });
 
   return res.send();
 };

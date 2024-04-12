@@ -24,6 +24,12 @@ messageRoutes.post(
   MessageController.enviar
 );
 
+messageRoutes.post(
+  "/groupMessage/:wppIdParam",
+  isAuth,
+  MessageController.enviarGrupo
+);
+
 messageRoutes.delete("/messages/:messageId", isAuth, MessageController.remove);
 
 export default messageRoutes;

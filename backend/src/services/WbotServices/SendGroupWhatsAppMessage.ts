@@ -21,7 +21,7 @@ interface SimpleRequest {
   number: string;
 }
 
-const SendSimpleWhatsAppMessage = async ({
+const SendGroupWhatsAppMessage = async ({
   wppId,
   body,
   number,
@@ -60,4 +60,4 @@ const SendSimpleWhatsAppMessage = async ({
   }
 };
 
-export default SendSimpleWhatsAppMessage;
+export default SendGroupWhatsAppMessage;

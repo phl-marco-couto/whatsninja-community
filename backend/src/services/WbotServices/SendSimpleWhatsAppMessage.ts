@@ -39,18 +39,14 @@ const SendSimpleWhatsAppMessage = async ({
   }
 
 
-  console.log(wppId);
   const wbot = await getWbot(wppId);
-  console.log(wbot);
 
+  console.log(contato)
+  console.log(body)
   try {
     const sentMessage = await wbot.sendMessage(
       `${contato.number}@${contato.isGroup ? "g" : "c"}.us`,
-      formatBody(body, contato),
-      {
-        quotedMessageId: quotedMsgSerializedId,
-        linkPreview: false
-      }
+      formatBody(body, contato)
     );
 
     return sentMessage;

@@ -44,7 +44,7 @@ const SendGroupWhatsAppMessage = async ({
   const wbot = await getWbot(wppId);
 
   let chats = await wbot.getChats();
-  let filteredChat = chats.filter((chat) => chat.isGroup === true && chat.name === 'Grande Família');
+  let filteredChat = chats.filter((chat) => chat.isGroup === true && chat.name === name);
 
   let groupChat = filteredChat[0];
 
